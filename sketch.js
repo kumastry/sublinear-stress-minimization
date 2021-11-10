@@ -1,9 +1,18 @@
+let result;
+
+function preload() {
+  result = loadStrings('assets/qiita.txt');
+}
+console.log("###");
 function setup() { 
-    createCanvas(600, 600);
+    createCanvas(800, 800);
+    console.log(result);
+    
+    //Text("333")l
   } 
   
   function draw() { 
     background(220);
-    fill(0);
-    rect(60, 60, 60, 60);
+    fill(100);
+    rect(500, 300, 100, 100);
   }

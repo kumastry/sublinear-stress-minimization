@@ -1,0 +1,9 @@
+Vertices with higher k-core numbers 
+→　kの値が大きい頂点
+
+
+やること
+・IMP
+  - k-coreのsubgraphを見つけるコードを書く(https://www.geeksforgeeks.org/find-k-cores-graph/)
+  - データを隣接リストのグラフに移す
+　- 後は3-8はやるだけ

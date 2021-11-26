@@ -5,7 +5,7 @@ from numpy.lib.function_base import delete
 
 
 
-n = 100
+n = 4
 def stress(X):
     res = 0
     for i in range(n):
@@ -16,8 +16,8 @@ def stress(X):
 
 #データ読み込み
 
-d = np.full((100, 100), np.inf)
-with open('assets\qiita.csv') as f:
+d = np.full((n, n), np.inf)
+with open('assets\sample.csv') as f:
     csvreader = csv.reader(f)
     flag = True
     for row in csvreader:
@@ -39,6 +39,7 @@ for i in range(len(d)):
     for j in range(len(d)):
         if(i == j):
             d[i][j] = 0
+print("隣接行列")
 print(d)
 
 
@@ -48,14 +49,20 @@ for k in range(n):
         for j in range(n):
             if d[i][k]!= np.inf and d[k][j]!=np.inf:
                 d[i][j] = min(d[i][j], d[i][k] + d[k][j])
-
+print("最短経路行列")
+print(d)
 
 #dijをwijに変換
 w = np.zeros((n, n))
 for i in range(n):
     for j in range(n):
+        if(d[i][j] == np.inf):
+            print("34124gasfasgasfafasdfa")
         if(i != j):
             w[i][j] = 1 / (d[i][j] * d[i][j])
+
+print("wij")
+print(w)
 
 #deltaの作成
 delta = np.zeros((n, n))
@@ -76,6 +83,8 @@ print(col_sum)
 for i in range(n):
     Lw[i][i] = col_sum[i]
 print(Lw)
+print(np.linalg.det(Lw))
+print(np.linalg.inv(Lw))
 
 #Lwは定数の行列で
 #Lzは反復で再計算される．
@@ -94,14 +103,29 @@ for i in range(n):
                 Lz[i][j] = -delta[i][j]  / np.linalg.norm(Xt[i]-Xt[j])
             else:
                 Lz[i][j] = 0
-
+        else:
+            Lz[i][j] = np.random.rand()
+print(Lz)
+print(Lw)
 cnt = 0
 while True:
-    Xt1 = np.linalg.solve(Lw, np.dot(Lz, Xt))
+   
+
+    #L = np.linalg.cholesky(Lw)
+
+    #t = np.linalg.solve(L, np.dot(Lz, Xt))
+
+    #Xt1 = np.linalg.solve(L.T.conj(), t)
     print("!!!!!")
-    print(Xt1.shape)
-    #print(Xt1)
-    print(np.dot(Lz, Xt))
+    print(np.dot(Lz, Xt).shape)
+    print(Lw.shape)
+    print(Xt.shape)
+    Xt1 = np.linalg.solve(Lw, np.dot(Lz, Xt))
+    print(Xt.shape)
+    print(Xt1)
+    #print(Lw)
+    print(Xt1)
+    
     print("stress")
     print(stress(Xt))
     print(stress(Xt1))
@@ -121,8 +145,8 @@ while True:
     #if(cnt == 1):
     #    break
 print("finish")
-print(Xt)
-print(Xt1)
+#print(Xt)
+#print(Xt1)
 
 print(stress(Xt))
 print(stress(Xt1))

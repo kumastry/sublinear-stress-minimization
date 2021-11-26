@@ -4,8 +4,7 @@ import csv
 from numpy.lib.function_base import delete 
 
 
-
-n = 4
+n = 100
 def stress(X):
     res = 0
     for i in range(n):
@@ -17,7 +16,7 @@ def stress(X):
 #データ読み込み
 
 d = np.full((n, n), np.inf)
-with open('assets\sample.csv') as f:
+with open('assets\qiita.csv') as f:
     csvreader = csv.reader(f)
     flag = True
     for row in csvreader:
@@ -85,16 +84,20 @@ while True:
                 #print(d[j][a])
                 #print(Xt[i][a]-Xt[j][a])
                 #print(np.linalg.norm(Xt[i]-Xt[j]))
-                up += w[i][j]*(Xt[j][a] + d[i][j]*(Xt[i][a]-Xt[j][a]) /np.linalg.norm(Xt[i]-Xt[j]) )
+                if(np.linalg.norm(Xt[i]-Xt[j]) != 0):
+                    up += w[i][j]*(Xt[j][a] + d[i][j]*(Xt[i][a]-Xt[j][a]) / np.linalg.norm(Xt[i]-Xt[j]) )
+                else:
+                    up += w[i][j]*(Xt[j][a])
             
-            print(up)
-            print(down)
+            #print(up)
+            #print(down)
             Xt[i][a] = up / down 
-            print(Xt[i][a])
+            #print(Xt[i][a])
             #print(up)
             #print(down)
     print("#####")
-    print(Xt)
+    #print(Xt)
+    print(stress(Xt))
     #if(cnt == 1):
     #    break
 

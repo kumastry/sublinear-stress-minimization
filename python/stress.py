@@ -80,9 +80,9 @@ print(Lw)
 #Lwは定数の行列で
 #Lzは反復で再計算される．
 
-Xt = np.full((2, n), 0)
-for i in range(2):
-    for j in range(n):
+Xt = np.full((n, 2), 0)
+for i in range(n):
+    for j in range(2):
         Xt[i][j] = 9*np.random.rand()+1
 Lz = np.zeros((n, n))
 print("####################")
@@ -90,14 +90,21 @@ print(Xt)
 for i in range(n):
     for j in range(n):
         if(i != j ):
-            Lz = - delta[i][j]  / np.linalg.norm(Xt[i]-Xt[j])
+            if( np.linalg.norm(Xt[i]-Xt[j]) != 0):
+                Lz[i][j] = -delta[i][j]  / np.linalg.norm(Xt[i]-Xt[j])
+            else:
+                Lz[i][j] = 0
 
 cnt = 0
 while True:
     Xt1 = np.linalg.solve(Lw, np.dot(Lz, Xt))
-
+    print("!!!!!")
+    print(Xt1.shape)
     #print(Xt1)
     print(np.dot(Lz, Xt))
+    print("stress")
+    print(stress(Xt))
+    print(stress(Xt1))
     if(( stress(Xt)-stress(Xt1) ) / stress(Xt) < 0.001):
         print("stress")
         print(stress(Xt))
@@ -108,10 +115,18 @@ while True:
     for i in range(n):
         for j in range(n):
             if( i != j):
-                Lz[i][j] = - delta[i][j]
+                Lz[i][j] = -delta[i][j]
     print(cnt)
     cnt += 1
+    #if(cnt == 1):
+    #    break
 print("finish")
 print(Xt)
+print(Xt1)
+
+print(stress(Xt))
+print(stress(Xt1))
+print(cnt)
+
 
 

@@ -7,3 +7,9 @@ Vertices with higher k-core numbers
   - k-coreのsubgraphを見つけるコードを書く(https://www.geeksforgeeks.org/find-k-cores-graph/)
   - データを隣接リストのグラフに移す
 　- 後は3-8はやるだけ
+
+
+
+javascriptの場合はストレス関数の最適化は実装が簡単なlocal optimazationを用いる．
+pythonの場合はコレスキー分解を使う．(np.linalg.choleskyやnp.linalg.solveなど)
+(21:00-22:00)

@@ -1,14 +1,21 @@
 import numpy as np
-import csv 
+import csv
+
+from numpy.lib.function_base import delete 
 
 
 
-
-def stress():
-    return 0git
+n = 100
+def stress(X):
+    res = 0
+    for i in range(n):
+        for j in range(n):
+            if( i != j ):
+                res += w[i][j]*(np.linalg.norm(X[i]-X[j])-d[i][j])**2
+    return res
 
 #データ読み込み
-n = 100
+
 d = np.full((100, 100), np.inf)
 with open('assets\qiita.csv') as f:
     csvreader = csv.reader(f)
@@ -72,5 +79,39 @@ print(Lw)
 
 #Lwは定数の行列で
 #Lzは反復で再計算される．
+
+Xt = np.full((2, n), 0)
+for i in range(2):
+    for j in range(n):
+        Xt[i][j] = 9*np.random.rand()+1
+Lz = np.zeros((n, n))
+print("####################")
+print(Xt)
+for i in range(n):
+    for j in range(n):
+        if(i != j ):
+            Lz = - delta[i][j]  / np.linalg.norm(Xt[i]-Xt[j])
+
+cnt = 0
+while True:
+    Xt1 = np.linalg.solve(Lw, np.dot(Lz, Xt))
+
+    #print(Xt1)
+    print(np.dot(Lz, Xt))
+    if(( stress(Xt)-stress(Xt1) ) / stress(Xt) < 0.001):
+        print("stress")
+        print(stress(Xt))
+        print(stress(Xt1))
+        break
+    Xt = Xt1
+
+    for i in range(n):
+        for j in range(n):
+            if( i != j):
+                Lz[i][j] = - delta[i][j]
+    print(cnt)
+    cnt += 1
+print("finish")
+print(Xt)
 
 

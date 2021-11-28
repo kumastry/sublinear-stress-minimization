@@ -1,3 +1,5 @@
+#難しい
+
 import numpy as np
 import csv
 

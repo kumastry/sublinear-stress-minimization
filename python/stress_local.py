@@ -1,10 +1,12 @@
+#簡単
+
 import numpy as np
 import csv
 
 from numpy.lib.function_base import delete 
 
 
-n = 100
+n = 4
 def stress(X):
     res = 0
     for i in range(n):
@@ -16,7 +18,7 @@ def stress(X):
 #データ読み込み
 
 d = np.full((n, n), np.inf)
-with open('assets\qiita.csv') as f:
+with open('assets\sample.csv') as f:
     csvreader = csv.reader(f)
     flag = True
     for row in csvreader:
@@ -56,7 +58,7 @@ w = np.zeros((n, n))
 for i in range(n):
     for j in range(n):
         if(d[i][j] == np.inf):
-            print("34124gasfasgasfafasdfa")
+            f = 1
         if(i != j):
             w[i][j] = 1 / (d[i][j] * d[i][j])
 
